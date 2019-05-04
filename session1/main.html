@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Maps and Views</title>
+    <style>
+        html,
+        body,
+        #viewDiv {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .active-btn {
+            color: #fff;
+            background-color: rgba(34, 111, 14, 1) !important;
+        }
+
+        .btn {
+            width: 150px;
+            height: 120 px;
+            background-color: #fff;
+            color: black;
+        }
+    </style>
+
+    <link rel="stylesheet" href="http://js.arcgis.com/4.11/esri/css/main.css">
+    <script src="http://js.arcgis.com/4.11/"></script>
+
+    <script>
+        var view;
+        var webmap;
+        var map;
+        require(["esri/Map", "esri/views/MapView", "esri/WebMap"], function (Map, MapView, WebMap) {
+            map = new Map({
+                basemap: "streets"
+            });
+
+            // webmap = new WebMap({
+            //     portalItem: {
+            //         id: "e691172598f04ea8881cd2a4adaa45ba"
+            //     }
+            // });
+
+            view = new MapView({
+                container: "viewDiv",
+                map: map,
+                zoom: 12, // Sets zoom level based on level of detail (LOD)
+                center: [31.237, 30.047] // Sets center point of view using longitude,latitude
+            });
+
+            view.on("click", function (event) {
+                console.log(event.mapPoint.longitude, event.mapPoint.latitude)
+                view.center = [event.mapPoint.longitude, event.mapPoint.latitude]
+
+            });
+
+        })
+
+    </script>
+
+    <!-- <script src="webmap.js"></script> -->
+    <!-- <script src="switchmaps.js"></script> -->
+    <!-- <script src="syncviews.js"></script> -->
+</head>
+
+<body>
+
+    <!-- load webmap -->
+    <!-- <div id="viewDiv"></div> -->
+
+    <!-- Switch maps -->
+    <div id="viewDiv"></div>
+    <input id="btnTopo" class="btn active-btn" type="button" value="topo">
+    <input id="btnGray" class="btn  " type="button" value="Gray">
+
+    <!-- Syncronize views -->
+    <!-- <div id="view1Div" style="float: left; width: 50%; height: 100%;"></div>
+    <div id="view2Div" style="float: left; width: 50%; height: 100%;"></div> -->
+</body>
+
+</html>
